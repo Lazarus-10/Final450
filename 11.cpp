@@ -11,15 +11,10 @@ class Solution{
         for(int i=0; i<n; i++){
             mp[a[i]]++;
         }
-        int count = mp.size();
         for(int i=0; i<m; i++){
-            if(mp.find(b[i]) == mp.end()){
-                mp[b[i]]++;
-                count++;
-            }
+            mp[b[i]]++;
         }
-    
-        return count;
+        return mp.size();
     }
 };
 
