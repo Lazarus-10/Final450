@@ -1,5 +1,5 @@
 #include <iostream>
-#include <unordered_map>
+#include <set>
 using namespace std;
 
 class Solution{
@@ -7,14 +7,14 @@ class Solution{
     //Function to return the count of number of elements in union of two arrays.
     int doUnion(int a[], int n, int b[], int m)  {
         
-        unordered_map<int, int> mp;
+        set<int> st;
         for(int i=0; i<n; i++){
-            mp[a[i]]++;
+            st.insert(a[i]);
         }
         for(int i=0; i<m; i++){
-            mp[b[i]]++;
+            st.insert(b[i]);
         }
-        return mp.size();
+        return st.size();
     }
 };
 
