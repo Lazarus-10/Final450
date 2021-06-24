@@ -1,4 +1,5 @@
 #include <iostream>
+#include <unordered_map>
 using namespace std;
 
 class Solution{
@@ -24,6 +25,24 @@ public:
         }
         return cnt/2;
     }
+
+    int getPairsCount2(int arr[], int n, int k) {
+        unordered_map<int, int> mp;
+        for(int i=0; i<n; i++){
+            mp[arr[i]]++;
+        }
+        int cnt = 0;
+        for(int i=0; i<n; i++){
+            if(arr[i] < k){
+                cnt += mp[k - arr[i]];
+            }
+            
+            if(k -arr[i] == arr[i]){
+                cnt--;
+            }
+        }
+        return cnt/2;
+    }
 };
 
 // { Driver Code Starts.
@@ -40,7 +59,7 @@ int main() {
             cin >> arr[i];
         }
         Solution ob;
-        auto ans = ob.getPairsCount(arr, n, k);
+        auto ans = ob.getPairsCount2(arr, n, k);
         cout << ans << "\n";
     }
     
