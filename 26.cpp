@@ -11,7 +11,7 @@ class Solution{
         int sum = 0;
         for(int i=0; i<n; i++){
             sum += arr[i];
-            if(mp.count(sum) || !sum)return true;
+            if(!sum || mp.count(sum))return true; // !sum bcz e.g {-10, 10}
             mp[sum]++;
         }
         return false;
