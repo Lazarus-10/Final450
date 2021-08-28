@@ -1,0 +1,27 @@
+{
+	"Final450": {
+		"prefix": "cp",
+		"body": [
+		  "#include <iostream>",
+		  "#include <string>",
+		  "#include <vector>",
+		  "#include <algorithm>",
+		  "#include <queue>",
+		  "#include <stack>",
+		  "#include <map>",
+		  "#include <unordered_map>",
+		  "#include <set>",
+		  "#include <unordered_set>",
+		  "#include <climits>",
+		  "#include <cstring>",
+		  "",
+		  "using namespace std;",
+		  "",
+		  "int main(){",
+		  "    freopen(\"$0\", \"r\", stdin);",
+		  "    return 0;",
+		  "}"
+		],
+		"description": "Final450"
+	  }
+}
