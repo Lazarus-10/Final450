@@ -1,58 +1,93 @@
+// An efficient method to find maximum value of mat[d]
+// - ma[a][b] such that c > a and d > b
 #include <iostream>
-#include <vector>
-#include <algorithm>
+#include <climits>
 using namespace std;
+#define N 5
 
-void rotate90Clockwise(vector<vector<int>> &arr)
+// The function returns maximum value A(c,d) - A(a,b)
+// over all choices of indexes such that both c > a
+// and d > b.
+int findMaxValue(int mat[][N])
 {
-    int row = arr.size();
-    int col = arr[0].size();
-    for (int i = 0; i < row; i++)
-    {
-        for (int j = i; j < col; j++)
-        {
-            swap(arr[i][j], arr[j][i]);
-        }
-    }
-    for (int i = 0; i < row; i++)
-    {
-        reverse(arr[i].begin(), arr[i].end());
-    }
-}
+	// stores maximum value
+	int maxValue = INT_MIN;
 
-void rotate90Clockwise2(vector<vector<int>> &arr)
-{
-    int N = arr.size();
-    for (int i = 0; i < N; i++)
-    {
-        for (int j = N - 1; j >= 0; j--)
-        {
-            cout << arr[j][i] << " ";
+	// maxArr[i][j] stores max of elements in matrix
+	// from (i, j) to (N-1, N-1)
+	int maxArr[N][N];
+
+	// last element of maxArr will be same's as of
+	// the input matrix
+	maxArr[N-1][N-1] = mat[N-1][N-1];
+
+	// preprocess last row
+	int maxv = mat[N-1][N-1]; // Initialize max
+	for (int j = N - 2; j >= 0; j--)
+	{
+		if (mat[N-1][j] > maxv)
+			maxv = mat[N - 1][j];
+		maxArr[N-1][j] = maxv;
+	}
+
+	// preprocess last column
+	maxv = mat[N - 1][N - 1]; // Initialize max
+	for (int i = N - 2; i >= 0; i--)
+	{
+		if (mat[i][N - 1] > maxv)
+			maxv = mat[i][N - 1];
+		maxArr[i][N - 1] = maxv;
+	}
+
+	// preprocess rest of the matrix from bottom
+	for (int i = N-2; i >= 0; i--)
+	{
+		for (int j = N-2; j >= 0; j--)
+		{
+			// Update maxValue
+			if (maxArr[i+1][j+1] - mat[i][j] >
+											maxValue)
+				maxValue = maxArr[i + 1][j + 1] - mat[i][j];
+
+			// set maxArr (i, j)
+			maxArr[i][j] = max(mat[i][j],
+							max(maxArr[i][j + 1],
+								maxArr[i + 1][j]) );
+		}
+	}
+
+    cout << endl;
+      for(int i = 0; i<N; i++){
+        for(int j=0; j<N; j++){
+            printf("%3d ", mat[i][j]);
         }
         cout << endl;
     }
-}
-
-void printMatrix(vector<vector<int>> arr)
-{
-    for (auto x : arr)
-    {
-        for (auto y : x)
-        {
-            cout << y << " ";
+    cout << endl;
+    for(int i = 0; i<N; i++){
+        for(int j=0; j<N; j++){
+            printf("%3d ", maxArr[i][j]);
         }
         cout << endl;
     }
+    cout << endl;
+
+
+	return maxValue;
 }
 
+// Driver program to test above function
 int main()
 {
-    int N = 4;
-    vector<vector<int>> arr{{1, 2, 3, 4},
-                            {5, 6, 7, 8},
-                            {9, 10, 11, 12},
-                            {13, 14, 15, 16}};
-    rotate90Clockwise(arr);
-    printMatrix(arr);
-    return 0;
+	int mat[N][N] = {
+					{ 1, 2, -1, -4, -20 },
+					{ -8, -3, 4, 2, 1 },
+					{ 3, 8, 6, 1, 3 },
+					{ -4, -1, 1, 7, -6 },
+					{ 0, -4, 10, -5, 1 }
+					};
+    int ans = findMaxValue(mat);
+	cout << "Maximum Value is " << ans << endl;
+
+	return 0;
 }

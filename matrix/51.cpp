@@ -1,46 +1,58 @@
-// { Driver Code Starts
-// kth largest element in a 2d array sorted row-wise and column-wise
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
 using namespace std;
-#define MAX 1000
-int mat[MAX][MAX];
-int kthSmallest(int mat[MAX][MAX], int n, int k);
-// driver program to test above function
+
+void rotate90Clockwise(vector<vector<int>> &arr)
+{
+    int row = arr.size();
+    int col = arr[0].size();
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = i; j < col; j++)
+        {
+            swap(arr[i][j], arr[j][i]);
+        }
+    }
+    for (int i = 0; i < row; i++)
+    {
+        reverse(arr[i].begin(), arr[i].end());
+    }
+}
+
+void rotate90Clockwise2(vector<vector<int>> &arr)
+{
+    int N = arr.size();
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = N - 1; j >= 0; j--)
+        {
+            cout << arr[j][i] << " ";
+        }
+        cout << endl;
+    }
+}
+
+void printMatrix(vector<vector<int>> arr)
+{
+    for (auto x : arr)
+    {
+        for (auto y : x)
+        {
+            cout << y << " ";
+        }
+        cout << endl;
+    }
+}
+
 int main()
 {
-    freopen("50.txt", "r", stdin);
-    int t;
-    cin >> t;
-    while (t--)
-    {
-        int n;
-        cin >> n;
-
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < n; j++)
-                cin >> mat[i][j];
-        int r;
-        cin >> r;
-        cout << kthSmallest(mat, n, r) << endl;
-    }
-    // cout << "7th smallest element is " << kthSmallest(mat, 4, 7);
+    int N = 4;
+    vector<vector<int>> arr{{1, 2, 3, 4},
+                            {5, 6, 7, 8},
+                            {9, 10, 11, 12},
+                            {13, 14, 15, 16}};
+    rotate90Clockwise(arr);
+    printMatrix(arr);
     return 0;
-}
-// } Driver Code Ends
-
-int kthSmallest(int mat[MAX][MAX], int n, int k)
-{
-    priority_queue<int, vector<int>, greater<int>> pq;
-    for (int i = 0; i < n; i++)
-    {
-        pq.push(mat[i][0]);
-    }
-    int i = 1;
-    while (i < k)
-    {
-        // cout << pq.top() << endl;
-        pq.pop();
-        i++;
-    }
-    return pq.top();
 }
